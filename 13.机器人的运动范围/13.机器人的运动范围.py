@@ -1,16 +1,18 @@
 # -*- coding:utf-8 -*-
 import copy
 class Solution:
-    def count_sum(self,temp):
-        sum = 0
-        while(temp%10!=0):
-            sum += temp %10
-            temp = temp/10
-        return sum
+    # def count_sum(self,temp):
+    #     sum = 0
+    #     while(temp%10!=0):
+    #         sum += temp %10
+    #         temp = temp/10
+    #     return sum
     def explore(self,row,col):
         if not (row>=0 and row <self.row and col >=0 and col < self.col):
             return
-        if self.count_sum(row)+self.count_sum(col) > self.threshold:
+        row_to_lst = list(map(int, list(str(row))))
+        col_to_lst = list(map(int, list(str(col))))
+        if sum(row_to_lst) + sum(col_to_lst) > self.threshold:
             return
         if self.visit_tag[row][col] == 1:
             return 

@@ -30,12 +30,12 @@ class Solution:
             return None
         if Root == None:
             return None
-        if Root.val == self.target.val:
+        if Root.val == self.target.val:   # 根节点相等的时候，再去check
             self.subtree = True
             self.check(Root,self.target)
-        if Root.left != None:
+        if Root.left != None:   # 往左遍历
             self.PreOrder(Root.left)
-        if Root.right != None:
+        if Root.right != None:    # 往右遍历
             self.PreOrder(Root.right)
 
     def HasSubtree(self, pRoot1, pRoot2):

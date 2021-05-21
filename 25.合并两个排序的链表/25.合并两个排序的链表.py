@@ -7,7 +7,7 @@ class Solution:
     # 返回合并后列表
     def Merge(self, pHead1, pHead2):
         # write code here
-        if pHead1 ==None and pHead2 ==None:
+        if pHead1 == None and  pHead2 == None:
             return None
         if pHead1 == None:
             return pHead2
@@ -16,22 +16,22 @@ class Solution:
         p = pHead2.next
         q = pHead1
         front = pHead2
-        if(pHead1.val<pHead2.val):
+        if pHead1.val < pHead2.val:
             front = pHead1
             p = pHead1.next
             q = pHead2
         head = front
-        while(p!=None and q!=None):
-            if(q.val<p.val):
-                temp = q.next
-                q.next = p
-                front.next = q
+        while(p!=None and q!=None):   # p代表第一个元素值最小的那一行
+            if q.val < p.val:
+                tmp = q.next
+                q.next = p      # 这里有点不好理解,因为我们是以p为基准的。
+                front.next = q 
                 front = q
-                q=temp
+                q = tmp
             else:
                 front = front.next
                 p = p.next
         if(q!=None):
-			front.next = q            
-                
+            front.next = q   # p 已经排序完了，还余下一部分q
+            
         return head

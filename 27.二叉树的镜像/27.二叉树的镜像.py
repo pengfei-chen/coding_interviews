@@ -15,3 +15,4 @@ class Solution:
             self.Mirror(root.left)
         if root.right!=None:
             self.Mirror(root.right)
+        return pRoot
