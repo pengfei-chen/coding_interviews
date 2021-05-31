@@ -11,10 +11,10 @@ class Solution:
             d[numbers[i]] += 1
             if numbers[i] == 0:
                 continue
-            if d[numbers[i]] > 1:
+            if d[numbers[i]] > 1:   # 重复出现
                 return False
-            MAX = max(MAX,numbers[i])
-            MIN = min(MIN,numbers[i])
+            MAX = max(MAX,numbers[i])   # 记录当前最大值
+            MIN = min(MIN,numbers[i])   # 记录当前最小值
         if MAX - MIN < 5:
             return True
         else:

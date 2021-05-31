@@ -19,5 +19,5 @@ class Solution:
         if char not in self.d:
             self.d[char] = self.count
         else:
-            self.d[char] = -1
+            self.d[char] = -1   # 说明他不是第一次出现了，重复了
         self.count += 1

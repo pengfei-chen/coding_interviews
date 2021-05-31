@@ -1,3 +1,9 @@
+
+"""
+deque是双端队列，双端队列的append（）和pop（）的时间复杂度为O（1），
+而list的insert（0，value），append以及pop（）的时间复杂度为O（n）。
+"""
+
 # -*- coding:utf-8 -*-
 # class TreeNode:
 #     def __init__(self, x):
@@ -10,7 +16,7 @@ class Solution:
         # write code here
         from Queue import deque
         ans = []
-        queue = deque()
+        queue = deque()  # 使用deque而不是list,因为 deque效率更高
         if root is None:
             return ans
         queue.append(root)

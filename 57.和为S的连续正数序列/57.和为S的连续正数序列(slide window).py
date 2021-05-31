@@ -18,3 +18,26 @@ class Solution:
                 big += 1
                 cur += big
         return ans
+
+# 参考答案
+class Solution:
+    def FindContinuousSequence(self, tsum):
+        # write code here
+        result = []
+        plow = 1
+        phigh= 2
+        while(phigh >  plow):
+            cur = (phigh + plow) * (phigh - plow +1) / 2 # 等差数列求和 Sn=n(a1+an)/2
+            if cur == tsum:
+                List = []
+                i = plow
+                while i <= phigh:
+                    List.append(i)
+                    i += 1
+                result.append(List)
+                plow += 1
+            elif cur < tsum:
+                phigh += 1
+            else:
+                plow += 1
+        return result
