@@ -93,58 +93,86 @@ def gapInsetionSort(alist,startpos,gap):
 归并是这样一个过程：把两个排序好了的列表结合在一起组合成一个单一的有序的新列表。
 有自顶向下（递归法）和自底向上的两种实现方法。
 """
-# 归并排序：自顶向下（递归法）方法实现
-def mergeSort(alist):
-    n = len(alist)
-    __mergeSort(alist, 0 ,n-1)
-    return alist
-# 对arr[l......r]的范围进行排序
-def __mergeSort(alist,start, end):
-    # 当数列的大小比较小的时候，数列近乎有序的概率较大
-    if(end-start <= 15):
-        insertionSortHelp(alist,start,end)
-        return
-    if start > end:
-        return
-    # 存在风险，start + end 可能越界
-    mid = (start + end ) // 2
-    __mergeSort(alist,start,mid)
-    __mergeSort(alist,mid+1,end)
-    # 优化
-    if alist[mid] > alist[mid+1]:   # 为什么是这里要这样？  判断当前alist 是否有序？ 若无序，则归并
-        merge(alist,start,mid,end)
+# # 归并排序：自顶向下（递归法）方法实现
+# def mergeSort(alist):
+#     n = len(alist)
+#     __mergeSort(alist, 0 ,n-1)
+#     return alist
+# # 对arr[l......r]的范围进行排序
+# def __mergeSort(alist,start, end):
+#     # 当数列的大小比较小的时候，数列近乎有序的概率较大
+#     if(end-start <= 15):
+#         insertionSortHelp(alist,start,end)
+#         return
+#     if start > end:
+#         return
+#     # 存在风险，start + end 可能越界
+#     mid = (start + end ) // 2
+#     __mergeSort(alist,start,mid)
+#     __mergeSort(alist,mid+1,end)
+#     # 优化
+#     if alist[mid] > alist[mid+1]:   # 为什么是这里要这样？  判断当前alist 是否有序？ 若无序，则归并
+#         merge(alist,start,mid,end)
 
-def merge(alist,start,mid,end):   # merge这里写得并不好
-    # 复制一份
-    blist = alist[start:end+1]
-    l = start   # 这里写得不容易理解  l 表示左半边元素
-    r = mid +1  # r 表示右半边元素
-    pos = start  # 当前位置索引
+# def merge(alist,start,mid,end):   # merge这里写得并不好
+#     # 复制一份
+#     blist = alist[start:end+1]
+#     l = start   # 这里写得不容易理解  l 表示左半边元素
+#     r = mid +1  # r 表示右半边元素
+#     pos = start  # 当前位置索引
 
-    while pos <= end:   # 从start 到 end 遍历新的blist   # z注意这里的  -start
-        if(l > mid):   #左边用尽，取右半边的元素
-            alist[pos] = blist[l-start]
-            r += 1
-        elif(r>end):  #右边用尽，取左半边的元素
-            alist[pos] = blist[l-start]
-            l += 1
-        elif blist[l-start] <= blist[r-start]:  #左半边当前元素小于右半边当前元素，取左半边
-            alist[pos] = blist[l-start]
-            l += 1
+#     while pos <= end:   # 从start 到 end 遍历新的blist   # z注意这里的  -start
+#         if(l > mid):   #左边用尽，取右半边的元素
+#             alist[pos] = blist[l-start]
+#             r += 1
+#         elif(r>end):  #右边用尽，取左半边的元素
+#             alist[pos] = blist[l-start]
+#             l += 1
+#         elif blist[l-start] <= blist[r-start]:  #左半边当前元素小于右半边当前元素，取左半边
+#             alist[pos] = blist[l-start]
+#             l += 1
+#         else:
+#             alist[pos] = blist[r-start]   #右半边当前元素小于左半边当前元素，取右半边
+#             r += 1
+#         pos += 1
+# # 插入排序，帮助获取排序好的数组
+# def insertionSortHelp(alist,l,r):
+#     for i in range(l+1, r+1):
+#         currentvalue = alist[i]
+#         position = i
+#         while alist[position-1] > currentvalue and position>l:
+#             alist[position] = alist[position-1]
+#             position = position - 1
+#         alist[position] = currentvalue
+#     return alist
+
+# 上面这个写的不好，修改如下 
+def merge(a, b):
+    c = []
+    h = j = 0
+    while j < len(a) and h < len(b):
+        if a[j] < b[h]:
+            c.append(a[j])
+            j += 1
         else:
-            alist[pos] = blist[r-start]   #右半边当前元素小于左半边当前元素，取右半边
-            r += 1
-        pos += 1
-# 插入排序，帮助获取排序好的数组
-def insertionSortHelp(alist,l,r):
-    for i in range(l+1, r+1):
-        currentvalue = alist[i]
-        position = i
-        while alist[position-1] > currentvalue and position>l:
-            alist[position] = alist[position-1]
-            position = position - 1
-        alist[position] = currentvalue
-    return alist
+            c.append(b[h])
+            h += 1
+    if j == len(a):
+        for i in b[h:]:
+            c.append(i)
+    else:
+        for i in a[j:]:
+            c.append(i)
+    return c
+
+def mergeSort(lists):
+    if len(lists) <= 1:
+        return lists
+    middle = len(lists)//2
+    left = merge_sort(lists[:middle])
+    right = merge_sort(lists[middle:])
+    return merge(left, right)
+
 
 # 自底向上（非递归法）方法
 def mergeBU(alist):
