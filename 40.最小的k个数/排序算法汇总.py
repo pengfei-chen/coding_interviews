@@ -215,6 +215,74 @@ def partition(alist,l,r):
     alist[l],alist[j] = alist[j],alist[l]   # 因为经过上面的形式后，列表成为 5,2,3,4,1,6,7,9,8  这样的形式，现在l=0，j=4
     return j
 
+#堆排序
+#大根堆，顺序排序
+# 恢复堆的调整过程,使父节点的值大于子节点
+def heapify_big(heap, index, heapSize):
+    left = 2*index + 1 
+    right = 2*index + 2
+    largest = index
+    while left < heapSize:
+        if heap[left] > heap[index]:
+            largest = left 
+        if right<heapSize and heap[right] > heap[largest]:
+            largest = right 
+        if largest != index:
+            heap[index],heap[largest] = heap[largest],heap[index] 
+        else:
+            break 
+        index = largest 
+        left = index*2 + 1
+        right = index*2 + 2 
+        
+#构造一个堆，将堆中所有数据重新排序
+def Build_Heap(heap):
+    HeapSize = len(heap)  #将堆的长度当独拿出来方便
+    for i in range(HeapSize ,-1,-1):#从后往前出数
+        heapify_big(heap,i,HeapSize)
+        
+#将根节点取出与最后一位做对调，对前面len-1个节点继续进行对调整过程。
+def HeapSort1(heap):
+    Build_Heap(heap)
+    for i in range(len(heap)-1,0,-1):
+        heap[0],heap[i] = heap[i],heap[0]
+        heapify_big(heap, 0, i)
+    return heap
+
+
+#小根堆，逆序排序
+# 恢复堆的调整过程,使父节点的值小于子节点
+def heapify_small(heap, index, heapSize):
+    left = 2*index + 1 
+    right = 2*index + 2
+    smallest = index
+    while left < heapSize:
+        if heap[left] < heap[index]:
+            smallest = left 
+        if right<heapSize and heap[right] < heap[smallest]:
+            smallest = right 
+        if smallest != index:
+            heap[index],heap[smallest] = heap[smallest],heap[index] 
+        else:
+            break 
+        index = smallest 
+        left = index*2 + 1
+        right = index*2 + 2 
+        
+#构造一个堆，将堆中所有数据重新排序
+def Build_Heap_(heap):
+    HeapSize = len(heap)  #将堆的长度当独拿出来方便
+    for i in range(HeapSize ,-1,-1):#从后往前出数
+        heapify_small(heap,i,HeapSize)
+        
+#将根节点取出与最后一位做对调，对前面len-1个节点继续进行对调整过程。
+def HeapSort_reverse(heap):
+    Build_Heap_(heap)
+    for i in range(len(heap)-1,0,-1):
+        heap[0],heap[i] = heap[i],heap[0]
+        heapify_small(heap, 0, i)
+    return heap
+    
 
 if __name__ == '__main__':
     alist = [2,9,5,8,3,4,6,1,7]
